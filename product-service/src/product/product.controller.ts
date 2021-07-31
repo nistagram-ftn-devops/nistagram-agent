@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { DeepPartial } from 'typeorm';
 import { Product } from './product.entity';
 import { ProductService } from './product.service';
@@ -10,6 +10,11 @@ export class ProductController {
   @Post()
   async create(@Body() payload: DeepPartial<Product>) {
     return this.productService.create(payload)
+  }
+
+  @Put()
+  async update(@Body() payload: DeepPartial<Product>) {
+    return this.productService.update(payload)
   }
 
   @Get()
