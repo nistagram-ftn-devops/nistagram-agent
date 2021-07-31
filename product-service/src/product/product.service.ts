@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeepPartial } from 'typeorm';
 import { Product } from './product.entity';
@@ -10,6 +10,16 @@ export class ProductService {
     @InjectRepository(ProductRepository)
     private productRepository: ProductRepository,
   ) {}
+
+  findAll() {
+    return this.productRepository.find()
+  }
+
+  async findById(id: number) {
+    const product = await this.productRepository.findOne({ id })
+    if (!product) throw new NotFoundException('product-not-found')
+    return product
+  }
 
   async create(payload: DeepPartial<Product>) {
     const product = new Product()
