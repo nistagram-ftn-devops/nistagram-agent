@@ -8,9 +8,67 @@ services:
     volumes:
       - mysqldata:/var/lib/mysql
       - ./resources/initdb:/docker-entrypoint-initdb.d
+    networks: 
+      - backend
     environment:
       MYSQL_ROOT_PASSWORD: root
 
+  product-service:
+    depends_on: 
+      - mysql
+    build:
+      context: ./product-service
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8081
+    networks:
+      - backend
+    environment: 
+      - DATABASE_HOST=mysql-nistagram-agent
+      - DATABASE_PORT="3308"
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=root
+      - DATABASE_NAME=NistagramAgentDb
+
+  order-service:
+    depends_on: 
+      - mysql
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile
+    ports:
+      - 8082:8082
+    networks:
+      - backend
+    environment: 
+      - DATABASE_HOST=mysql-nistagram-agent
+      - DATABASE_PORT="3308"
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=root
+      - DATABASE_NAME=NistagramAgentDb
+
+  report-service:
+    depends_on: 
+      - mysql
+    build:
+      context: ./report-service
+      dockerfile: Dockerfile
+    ports:
+      - 8083:8083
+    networks:
+      - backend
+    environment: 
+      - DATABASE_HOST=mysql-nistagram-agent
+      - DATABASE_PORT="3308"
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=root
+      - DATABASE_NAME=NistagramAgentDb
+    
+networks:
+  backend:
+    name: nistagram-agent
+    driver: bridge
+    
 volumes:
   mysqldata:
     driver: local
