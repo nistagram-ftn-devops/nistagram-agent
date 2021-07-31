@@ -30,4 +30,9 @@ export class ProductService {
 
     return this.productRepository.save(product)
   }
+
+  async delete(id: number) {
+    const product = await this.findById(id)
+    this.productRepository.remove(product)
+  }
 }
