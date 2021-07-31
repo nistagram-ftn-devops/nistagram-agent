@@ -31,6 +31,16 @@ export class ProductService {
     return this.productRepository.save(product)
   }
 
+  async update(payload: DeepPartial<Product>) {
+    const product = await this.findById(payload.id)
+    product.name = payload.name
+    product.imageUrl = payload.imageUrl
+    product.price = payload.price
+    product.quantity = payload.quantity
+
+    return this.productRepository.save(product)
+  }
+
   async delete(id: number) {
     const product = await this.findById(id)
     this.productRepository.remove(product)
