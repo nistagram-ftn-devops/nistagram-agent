@@ -34,7 +34,7 @@ export class ProductsComponent implements OnInit {
   }
 
   edit(product: Product) {
-
+    this.router.navigate(['edit' + '/' + product.id])
   }
 
   remove(product: Product) {
