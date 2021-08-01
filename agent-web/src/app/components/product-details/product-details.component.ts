@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { Order } from 'src/app/models/order.model';
 import { Product } from 'src/app/models/product.model';
+import { OrderService } from 'src/app/services/order.service';
 import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
@@ -10,17 +14,27 @@ import { ProductsService } from 'src/app/services/products.service';
 })
 export class ProductDetailsComponent implements OnInit {
 
+  form: FormGroup
   productId: number
   product: Product
+  showForm = false
 
   constructor(
     private productsService: ProductsService,
-    private activatedRoute: ActivatedRoute
+    private orderService: OrderService,
+    private activatedRoute: ActivatedRoute,
+    private toastr: ToastrService,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
     this.productId = this.activatedRoute.snapshot.params['id']
     this.getProduct()
+
+    this.form = this.fb.group({
+      buyerName: ['', Validators.required],
+      buyerAddress: ['', Validators.required],
+    })
   }
 
   private getProduct() {
@@ -29,4 +43,23 @@ export class ProductDetailsComponent implements OnInit {
     })
   }
 
+  toggleShowForm() {
+    this.showForm = !this.showForm
+  }
+
+  submit() {
+    const order = new Order()
+    order.buyerName = this.form.controls.buyerName.value
+    order.buyerAddress = this.form.controls.buyerAddress.value
+    order.product = this.product
+
+    this.orderService.buy(order).subscribe((res: Order) => {
+      this.toastr.success('Order created')
+      this.form.controls.buyerName.setValue('')
+      this.form.controls.buyerAddress.setValue('')
+      this.toggleShowForm()
+    }, err => {
+      this.toastr.error('Error while creating order')
+    })
+  }
 }
