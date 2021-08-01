@@ -1,0 +1,28 @@
+<h3>All products</h3>
+
+<button class="btn btn-primary" (click)="add()">Add product</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of products">
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>
+                <button class="btn btn-sm btn-primary" (click)="edit(product)">Edit</button>
+                <button class="btn btn-sm btn-primary" (click)="remove(product)">Remove</button>
+                <button class="btn btn-sm btn-primary" (click)="details(product)">Details</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
