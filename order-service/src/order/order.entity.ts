@@ -12,6 +12,6 @@ export class Order extends BaseEntity {
     @Column()
     buyerAddress: string
 
-    @ManyToOne(() => Product)
+    @ManyToOne(() => Product, (product) => product.orders, { onDelete: "CASCADE" })
     product: Product
 }
