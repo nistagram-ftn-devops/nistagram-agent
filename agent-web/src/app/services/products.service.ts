@@ -19,4 +19,8 @@ export class ProductsService {
   getProduct(id: number): Observable<any> {
     return this.http.get(this.BASE_PATH + '/' + id)
   }
+
+  removeProduct(id: number): Observable<any> {
+    return this.http.delete(this.BASE_PATH + '/' + id)
+  }
 }

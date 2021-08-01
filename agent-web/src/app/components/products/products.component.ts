@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Product } from 'src/app/models/product.model';
 import { ProductsService } from 'src/app/services/products.service';
 
@@ -14,7 +15,8 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     private productsService: ProductsService,
-    private router: Router
+    private router: Router,
+    private toastrService: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -36,7 +38,12 @@ export class ProductsComponent implements OnInit {
   }
 
   remove(product: Product) {
-
+    this.productsService.removeProduct(product.id).subscribe(() => {
+      this.toastrService.success('Product removed')
+      this.products = this.products.filter(p => p.id !== product.id)
+    }, err => {
+      this.toastrService.error('Error while removing product')
+    })
   }
 
   details(product: Product) {

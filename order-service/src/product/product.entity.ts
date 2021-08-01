@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Order } from 'src/order/order.entity';
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Product extends BaseEntity {
@@ -16,4 +17,7 @@ export class Product extends BaseEntity {
 
   @Column()
   quantity: number;
+
+  @OneToMany(() => Order, (order) => order.product, { onDelete: "CASCADE" })
+  orders: Order[]
 }
