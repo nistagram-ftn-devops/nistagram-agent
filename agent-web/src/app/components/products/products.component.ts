@@ -30,7 +30,7 @@ export class ProductsComponent implements OnInit {
   }
 
   add() {
-
+    this.router.navigate(['add'])
   }
 
   edit(product: Product) {

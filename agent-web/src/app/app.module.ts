@@ -9,12 +9,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductsComponent } from './components/products/products.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { CreateProductComponent } from './components/create-product/create-product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductsComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    CreateProductComponent
   ],
   imports: [
     BrowserModule,
