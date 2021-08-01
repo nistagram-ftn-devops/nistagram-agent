@@ -27,4 +27,8 @@ export class ProductsService {
   add(payload: Product): Observable<any> {
     return this.http.post(this.BASE_PATH, payload)
   }
+
+  update(payload: Product): Observable<any> {
+    return this.http.put(this.BASE_PATH, payload)
+  }
 }
