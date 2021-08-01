@@ -4,6 +4,7 @@ import { CreateProductComponent } from './components/create-product/create-produ
 import { EditProductComponent } from './components/edit-product/edit-product.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductsComponent } from './components/products/products.component';
+import { ReportsComponent } from './components/reports/reports.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'edit/:id',
     component: EditProductComponent
+  },
+  {
+    path: 'reports',
+    component: ReportsComponent
   }
 ];
 
