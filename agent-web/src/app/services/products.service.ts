@@ -23,4 +23,8 @@ export class ProductsService {
   removeProduct(id: number): Observable<any> {
     return this.http.delete(this.BASE_PATH + '/' + id)
   }
+
+  add(payload: Product): Observable<any> {
+    return this.http.post(this.BASE_PATH, payload)
+  }
 }
